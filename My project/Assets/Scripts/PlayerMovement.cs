@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
 
+    public bool canMove = true;
     public float speed = 12f;
     public float gravity = -9.81f;
     public float jumpHeight = 3f;
@@ -19,8 +20,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        UpdateMovementInput();
-        UpdateJumpInput();
+        if (canMove)
+        {
+            UpdateMovementInput();
+            UpdateJumpInput();
+        }
+ 
     }
 
     //得到左右前后的输入并且更新玩家的位置
