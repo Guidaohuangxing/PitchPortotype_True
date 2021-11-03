@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
         }
         if(latestGazeObject != null && latestGazeObject.tag == "Player")
         {
-            if (latestGazeObject.GetComponent<FakeAI>())
+            if (latestGazeObject.GetComponent<FakeAI>().LookAtPlayer())
             {
                 player.canMove = false;
-                print("gaze");
+                //print("gaze");
             }
         }
     }

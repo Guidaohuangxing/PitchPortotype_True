@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.tobii.gaming.sdk": {
-      "version": "file:D:/tobii",
+      "version": "file:C:/tobii",
       "depth": 0,
       "source": "local",
       "dependencies": {}

@@ -21,7 +21,7 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GetComponentInParent<PlayerMovement>().canMove)
+        if (true)//GetComponentInParent<PlayerMovement>().canMove)
         {
             GazePoint gazePoint = TobiiAPI.GetGazePoint();
             if (gazePoint.IsRecent())
@@ -30,14 +30,15 @@ public class MouseLook : MonoBehaviour
                 float mouseY = (gazePoint.Viewport.y - 0.5f) * 2 * mouseSensitivity;
                 xRotation -= mouseY;
                 xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-                print(xRotation);
+                //print(xRotation);
                 transform.localRotation = Quaternion.Euler(xRotation, 0, 0f);
                 playerBody.Rotate(Vector3.up * mouseX);
 
             }
         }
-        
-        
+        //GetFocusedObject();
+
+
     }
 
 
@@ -47,13 +48,15 @@ public class MouseLook : MonoBehaviour
         GazePoint gazePoint = TobiiAPI.GetGazePoint();
         if (gazePoint.IsRecent())
         {
-            Vector2 viewPortEyePos = gazePoint.Viewport - new Vector2(0.5f, 0.5f);
+            Vector2 viewPortEyePos = gazePoint.Viewport;// - new Vector2(0.5f, 0.5f);
             Vector3 eyePos = viewPortEyePos * new Vector2(canvas.renderingDisplaySize.x / canvas.scaleFactor, canvas.renderingDisplaySize.y / canvas.scaleFactor);
+            //print("eyepos" + eyePos);
+            //print("mousePos" + Input.mousePosition);
             Ray ray = Camera.main.ScreenPointToRay(eyePos);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 1000))
             {
-                print(hit.collider.name);
+                //print(hit.collider.name);
                 return hit.collider.gameObject;
 
             }
