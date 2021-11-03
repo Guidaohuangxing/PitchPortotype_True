@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
                 player.transform.position = Vector3.Lerp(player.transform.position, TargetPos, 0.002f);
             }
             
-            print(Vector3.Distance(player.transform.position, AI.transform.position));
+            //print(Vector3.Distance(player.transform.position, AI.transform.position));
             if (Vector3.Distance(player.transform.position, AI.transform.position) < distanceOffset)
             {
                 moveTwoPlayer = false;
