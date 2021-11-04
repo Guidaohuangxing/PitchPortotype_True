@@ -11,6 +11,13 @@ public class FakeAI : MonoBehaviour
     public Transform player;
     public Vector3 targetDir;
     public float rotateThershold = 20f;
+    public bool rotateOnlyOnce = true;
+    Vector3 now;
+    Quaternion startRotate;
+    Quaternion EndRoatate;
+    float startTime;
+    float rotateAngle;
+    public float rotateSpeed = 15f;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,10 +40,13 @@ public class FakeAI : MonoBehaviour
             //{
             //    isRotation = false;
             //}
-            Vector3 now = Vector3.Lerp(transform.forward, targetDir, 0.02f);
-            this.transform.LookAt(now, Vector3.up);
-            print(this.transform.position);
-            print(targetDir);
+            //now = Vector3.Lerp(now, targetDir, 0.2f);
+            float a = (Time.time - startTime) / (rotateAngle / rotateSpeed);
+            transform.localRotation = Quaternion.Slerp(startRotate, EndRoatate, a);
+            print(EndRoatate);
+            //this.transform.LookAt(targetDir, Vector3.up);
+            print("朝向:"+this.transform.forward);
+            print("目标朝向"+targetDir );
         }
     }
     public void LookAtEyeball()
@@ -47,8 +57,25 @@ public class FakeAI : MonoBehaviour
     public bool LookAtPlayer()
     {
         print("看到了!");
-        isRotation = true;
-        targetDir = player.position - this.transform.position;
+        if (rotateOnlyOnce)
+        {
+            isRotation = true;
+            //now = transform.forward;
+            targetDir = player.position - this.transform.position;
+            //targetDir = targetDir;
+            //targetDir = targetDir.normalized;
+            rotateOnlyOnce = false;
+            startTime = Time.time;
+            startRotate = this.transform.localRotation;
+            rotateAngle = Vector3.Angle(transform.forward, targetDir);
+            
+            if(Vector3.Cross(transform.forward, targetDir).y < 0)
+            {
+                rotateAngle = -rotateAngle;
+            }
+            print(rotateAngle);
+            EndRoatate = Quaternion.AngleAxis(rotateAngle, Vector3.up) * startRotate;
+        }
         lookTargetController.LookAtPlayer();
         return true;
     }
